@@ -4,7 +4,7 @@ export class ArticlePage {
 
     //Define all methods
 
-    addArticle(){
+    addArticleAgain(){
 
         cy.visit("/articles")
 
