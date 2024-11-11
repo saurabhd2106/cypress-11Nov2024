@@ -6,6 +6,8 @@ export class ArticlePage {
 
     addArticle(){
 
+        cy.visit("/")
+
     }
 
     editArticle(){
