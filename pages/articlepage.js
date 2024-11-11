@@ -6,7 +6,7 @@ export class ArticlePage {
 
     addArticle(){
 
-        cy.visit("/")
+        cy.visit("/articles")
 
     }
 
