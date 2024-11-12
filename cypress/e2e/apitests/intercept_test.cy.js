@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { articlepage } from "../../../pages/articlepage"
+import { loginpage } from "../../../pages/LoginPage"
 
 describe("Intercepting call Testing", function () {
 
@@ -51,6 +53,63 @@ describe("Intercepting call Testing", function () {
         })
 
         cy.get(".error-message-presenter").should("be.visible").and("contain.text", "Cannot load popular tags...")
+
+    })
+
+
+    it("500 Error code- Article API", function () {
+
+
+        cy.intercept({
+            method: 'POST',
+            url: "**/api/articles"
+        }, {
+            statusCode: 500
+        }).as("interceptApi")
+
+        cy.visit("/")
+
+        loginpage.loginToApplication("testuser@test.com", "testpassword")
+
+        articlepage.addArticleAgain("Test Article", "Test article on cypress", "More details", "automation")
+
+        cy.wait("@interceptApi")
+
+        cy.get("@interceptApi").then(function(xhr){
+
+
+           expect(xhr.response.statusCode).to.equal(500)
+
+        })
+
+
+    })
+
+    it.only("Modify Request", function(){
+
+        cy.intercept({
+            method: 'POST',
+            url: "**/api/articles"
+        }, function(req){
+            req.body.article.tagList = ["cypress", "selenium", "automation"]
+        } ).as("interceptApi")
+
+        cy.visit("/")
+
+        loginpage.loginToApplication("testuser@test.com", "testpassword")
+
+        articlepage.addArticleAgain("Test Article", "Test article on cypress", "More details", "automation")
+
+        cy.wait("@interceptApi")
+
+        cy.get("@interceptApi").then(function(xhr){
+
+
+           expect(xhr.response.statusCode).to.equal(200)
+
+           expect(xhr.response.body.article.tagList).to.contain("cypress")
+
+        })
 
     })
 

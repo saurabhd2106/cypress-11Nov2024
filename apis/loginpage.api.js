@@ -18,6 +18,18 @@ export class LoginApi {
         
     }
 
+    signup(userdetails){
+
+
+        const headers = {
+            "Content-Type": "application/json"
+           }
+
+        return restclient.sendPostRequest("/api/users", userdetails, headers)
+
+    }
+   
+
     loginToApplication(userdetails){
 
        const headers = {
@@ -30,8 +42,6 @@ export class LoginApi {
 
     verifySuccessLogin(response, useremail){
 
-
-    
 
         expect(response.body.user.email).to.contains(useremail)
 

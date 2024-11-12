@@ -8,12 +8,23 @@ module.exports = defineConfig({
       // implement node event listeners here
 
       on('file:preprocessor', cucumber())
+      require('cypress-mochawesome-reporter/plugin')(on);
     },
 
     specPattern: ["cypress/**/*cy.{js,ts}", "cypress/**/*.{feature,features}"],
     baseUrl: "http://localhost",
     viewportWidth: 1366,
-    viewportHeight: 768
+    viewportHeight: 768,
+    reporter: 'cypress-mochawesome-reporter',
+    reporterOptions: {
+      charts: true,
+      reportPageTitle: 'Test Execution report',
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      saveAllAttempts: false,
+    },
+    video: true,
+    retries: 2
   },
 
 });
