@@ -12,7 +12,7 @@ module.exports = defineConfig({
     },
 
     specPattern: ["cypress/**/*cy.{js,ts}", "cypress/**/*.{feature,features}"],
-    baseUrl: "http://localhost",
+    baseUrl: "https://conduit-realworld-example-app.fly.dev/",
     viewportWidth: 1366,
     viewportHeight: 768,
     reporter: 'cypress-mochawesome-reporter',
